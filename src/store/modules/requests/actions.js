@@ -5,7 +5,7 @@ export default {
         userEmail: payload.email,
         message: payload.message,
       };
-      const response = fetch(
+      const response = await fetch(
         `https://vue-find-a-coach-1c546-default-rtdb.europe-west1.firebasedatabase.app/requests/${payload.coachId}.json`,
         {
           method: `POST`,
@@ -14,6 +14,7 @@ export default {
       );
 
       const responseData = await response.json();
+
       if (!response.ok) {
         throw new Error(responseData.message || `Failed to send request.`);
       }
@@ -22,14 +23,15 @@ export default {
 
       context.commit('addRequest', newRequest);
     } catch (error) {
-      error(error);
+      throw new Error(error.message);
     }
   },
   async fetchRequests(context) {
     try {
+      const token = context.rootGetters.token;
       const userId = context.rootGetters.getUserId;
       const response = await fetch(
-        `https://vue-find-a-coach-1c546-default-rtdb.europe-west1.firebasedatabase.app/requests/${userId}.json`
+        `https://vue-find-a-coach-1c546-default-rtdb.europe-west1.firebasedatabase.app/requests/${userId}.json?auth=${token}`
       );
       const responseData = await response.json();
 
@@ -52,7 +54,7 @@ export default {
 
       context.commit('setRequests', requests);
     } catch (error) {
-      error(error);
+      throw new Error(error.message);
     }
   },
 };

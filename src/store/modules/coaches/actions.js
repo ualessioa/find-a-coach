@@ -10,8 +10,10 @@ export default {
         areas: coach.areas,
       };
 
+      const token = context.rootGetters.token;
+
       const response = await fetch(
-        `https://vue-find-a-coach-1c546-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+        `https://vue-find-a-coach-1c546-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
         {
           method: 'PUT',
           body: JSON.stringify(coachData),
@@ -25,7 +27,7 @@ export default {
 
       context.commit('addCoach', { ...coachData, id: userId });
     } catch (error) {
-      error(error);
+      throw new Error(error.message);
     }
   },
   async loadCoaches(context, payload) {

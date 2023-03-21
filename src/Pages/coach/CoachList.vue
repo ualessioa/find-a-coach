@@ -16,7 +16,13 @@
           <base-button mode="outline" @click="loadCoaches(true)"
             >Refresh</base-button
           >
-          <base-button link to="/register" v-if="!isCoach && !isLoading"
+          <base-button link to="/auth?redirect=register" v-if="!isLoggedIn"
+            >Login and Register as a Coach</base-button
+          >
+          <base-button
+            link
+            to="/register"
+            v-if="isLoggedIn && !isCoach && !isLoading"
             >Register as Coach</base-button
           >
         </div>
@@ -60,6 +66,9 @@ export default {
     };
   },
   computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches']; //first coaches in the string is the namespace, second is the name of the getter
       return coaches.filter((coach) => {
