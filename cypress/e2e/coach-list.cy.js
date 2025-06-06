@@ -1,4 +1,4 @@
-
+```javascript
 describe('Coach Listing and Filtering', () => {
   const mockCoaches = {
     c1: { firstName: 'Maximilian', lastName: 'Schwarzmüller', areas: ['frontend', 'backend', 'career'], hourlyRate: 30, description: '...' },
@@ -114,4 +114,4 @@ describe('Coach Listing and Filtering', () => {
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
   });
 });
-
+```
