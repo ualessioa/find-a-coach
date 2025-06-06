@@ -1,4 +1,3 @@
-```javascript
 describe('Coach Listing and Filtering', () => {
   const mockCoaches = {
     c1: { firstName: 'Maximilian', lastName: 'Schwarzmüller', areas: ['frontend', 'backend', 'career'], hourlyRate: 30, description: '...' },
@@ -10,7 +9,7 @@ describe('Coach Listing and Filtering', () => {
     // Intercept the request to Firebase and return mock data
     cy.intercept(
       'GET',
-      'https://vue-finder-app-2121f-default-rtdb.firebaseio.com/coaches.json', // Ensure this URL matches your actual Firebase URL
+      'https://vue-find-a-coach-1c546-default-rtdb.europe-west1.firebasedatabase.app/coaches.json', // Ensure this URL matches your actual Firebase URL
       { body: mockCoaches }
     ).as('getCoaches');
     cy.visit('/coaches');
@@ -114,4 +113,4 @@ describe('Coach Listing and Filtering', () => {
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
   });
 });
-```
+
