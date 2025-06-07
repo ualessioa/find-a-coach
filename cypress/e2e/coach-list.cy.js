@@ -20,28 +20,28 @@ describe('Coach Listing and Filtering', () => {
   it('should load the coach list page and display initial coaches', () => {
     cy.url().should('include', '/coaches');
     cy.get('h3').should('not.contain', 'No coaches found.');
-    cy.get('ul > li').should('have.length', 3); // Expecting 3 coaches from mock
+    cy.get('.card > ul >li').should('have.length', 3); // Expecting 3 coaches from mock
 
     // Verify Maximilian
     cy.contains('h3', 'Maximilian Schwarzmüller').should('be.visible');
     cy.contains('h3', 'Maximilian Schwarzmüller').closest('li').find('.badge.frontend').should('be.visible');
     cy.contains('h3', 'Maximilian Schwarzmüller').closest('li').find('.badge.backend').should('be.visible');
-    cy.get('ul > li').contains('h3', 'Maximilian Schwarzmüller').closest('li').find('.badge.career').should('be.visible');
-    cy.contains('h3', 'Maximilian Schwarzmüller').closest('li').should('contain', '$30/hour');
+    cy.get('.card > ul >li').contains('h3', 'Maximilian Schwarzmüller').closest('li').find('.badge.career').should('be.visible');
+    cy.contains('h3', 'Maximilian Schwarzmüller').closest('li').should('contain', '$30/h');
 
     // Verify Julie
     cy.contains('h3', 'Julie Jones').should('be.visible');
     cy.contains('h3', 'Julie Jones').closest('li').find('.badge.frontend').should('be.visible');
     cy.contains('h3', 'Julie Jones').closest('li').find('.badge.career').should('be.visible');
     cy.contains('h3', 'Julie Jones').closest('li').find('.badge.backend').should('not.exist');
-    cy.contains('h3', 'Julie Jones').closest('li').should('contain', '$30/hour');
+    cy.contains('h3', 'Julie Jones').closest('li').should('contain', '$30/h');
 
     // Verify Manuel
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').closest('li').find('.badge.frontend').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').closest('li').find('.badge.backend').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').closest('li').find('.badge.career').should('not.exist');
-    cy.contains('h3', 'Manuel Lorenz').closest('li').should('contain', '$35/hour');
+    cy.contains('h3', 'Manuel Lorenz').closest('li').should('contain', '$35/h');
   });
 
   it('should filter coaches by "Frontend" area', () => {
@@ -52,7 +52,7 @@ describe('Coach Listing and Filtering', () => {
     cy.get('.filter-option').contains('label', 'Backend').parent().should('not.have.class', 'active');
     cy.get('.filter-option').contains('label', 'Career').parent().should('not.have.class', 'active');
 
-    cy.get('ul > li').should('have.length', 3); // All 3 have frontend
+    cy.get('.card > ul >li').should('have.length', 3); // All 3 have frontend
     cy.contains('h3', 'Maximilian Schwarzmüller').should('be.visible');
     cy.contains('h3', 'Julie Jones').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
@@ -63,7 +63,7 @@ describe('Coach Listing and Filtering', () => {
     cy.get('input#career').uncheck();
     cy.get('.filter-option').contains('label', 'Backend').parent().should('have.class', 'active');
 
-    cy.get('ul > li').should('have.length', 2); // Max and Manuel have backend
+    cy.get('.card > ul >li').should('have.length', 2); // Max and Manuel have backend
     cy.contains('h3', 'Maximilian Schwarzmüller').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
     cy.contains('h3', 'Julie Jones').should('not.exist');
@@ -74,7 +74,7 @@ describe('Coach Listing and Filtering', () => {
     cy.get('input#backend').uncheck();
     cy.get('.filter-option').contains('label', 'Career').parent().should('have.class', 'active');
 
-    cy.get('ul > li').should('have.length', 2); // Max and Julie have career
+    cy.get('.card > ul >li').should('have.length', 2); // Max and Julie have career
     cy.contains('h3', 'Maximilian Schwarzmüller').should('be.visible');
     cy.contains('h3', 'Julie Jones').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').should('not.exist');
@@ -85,13 +85,13 @@ describe('Coach Listing and Filtering', () => {
     cy.get('input#backend').uncheck();
     cy.get('input#career').uncheck();
 
-    cy.get('ul > li').should('not.exist');
+    cy.get('.card > ul >li').should('not.exist');
     cy.get('h3').contains('No coaches found.').should('be.visible');
   });
 
   it('should show all coaches when a filter is unchecked and then checked again', () => {
     // Initially all checked, 3 coaches
-    cy.get('ul > li').should('have.length', 3);
+    cy.get('.card > ul >li').should('have.length', 3);
 
     // Uncheck frontend
     cy.get('input#frontend').uncheck();
@@ -100,7 +100,7 @@ describe('Coach Listing and Filtering', () => {
     // Let's be more specific: uncheck frontend AND career, leaving only backend
     cy.get('input#career').uncheck();
     // Now only Max and Manuel should be visible due to 'backend'
-    cy.get('ul > li').should('have.length', 2);
+    cy.get('.card > ul >li').should('have.length', 2);
     cy.contains('h3', 'Maximilian Schwarzmüller').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
     cy.contains('h3', 'Julie Jones').should('not.exist');
@@ -108,7 +108,7 @@ describe('Coach Listing and Filtering', () => {
     // Re-check frontend
     cy.get('input#frontend').check();
     // Now Max (frontend, backend), Manuel (frontend, backend), Julie (frontend, career) should be visible (career is still unchecked)
-    cy.get('ul > li').should('have.length', 3);
+    cy.get('.card > ul >li').should('have.length', 3);
     cy.contains('h3', 'Maximilian Schwarzmüller').should('be.visible');
     cy.contains('h3', 'Julie Jones').should('be.visible');
     cy.contains('h3', 'Manuel Lorenz').should('be.visible');
