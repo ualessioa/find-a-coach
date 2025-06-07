@@ -1,4 +1,3 @@
-```javascript
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
@@ -7,8 +6,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    supportFile: 'cypress/support/e2e.js',
-    specPattern: 'cypress/e2e/**/*.cy.js'
+    supportFile: 'cypress/support/e2e.js', // Explicitly set supportFile
+    screenshotOnRunFailure: false,
   },
 })
-```
